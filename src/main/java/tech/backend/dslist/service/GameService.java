@@ -1,11 +1,13 @@
 package tech.backend.dslist.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tech.backend.dslist.controller.dto.GameMinDto;
 import tech.backend.dslist.entity.Game;
 import tech.backend.dslist.repository.GameRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -16,6 +18,7 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<GameMinDto> findAll() {
 
         var result = gameRepository.findAll();
@@ -30,4 +33,11 @@ public class GameService {
 
         return dto;
     }
+
+    @Transactional(readOnly = true)
+    public Optional<Game> findById(Long id) {
+        return gameRepository.findById(id);
+    }
+
+
 }

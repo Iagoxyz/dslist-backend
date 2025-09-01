@@ -2,6 +2,7 @@ package tech.backend.dslist.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.backend.dslist.controller.dto.GameMinDto;
@@ -24,5 +25,11 @@ public class GameController {
     public ResponseEntity<List<GameMinDto>> findAll() {
         var result = gameService.findAll();
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Game> findById(@PathVariable Long id) {
+        var user = gameService.findById(id);
+        return ResponseEntity.ok(user.get());
     }
 }
