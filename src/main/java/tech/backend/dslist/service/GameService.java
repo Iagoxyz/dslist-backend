@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.backend.dslist.controller.dto.GameMinDto;
 import tech.backend.dslist.entity.Game;
+import tech.backend.dslist.projections.GameMinProjection;
 import tech.backend.dslist.repository.GameRepository;
 
 import java.util.List;
@@ -37,6 +38,14 @@ public class GameService {
     @Transactional(readOnly = true)
     public Optional<Game> findById(Long id) {
         return gameRepository.findById(id);
+    }
+
+    public List<GameMinDto> findByList(Long listId) {
+
+        List<GameMinProjection> result = gameRepository.searchByList(listId);
+        return result.stream()
+                .map(GameMinDto::fromProjection)
+                .toList();
     }
 
 
